@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ResumeAI — Land your next job faster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0f1117;
+  --ink-soft: #4a4d57;
+  --ink-muted: #9498a6;
+  --cream: #f7f6f2;
+  --white: #ffffff;
+  --accent: #1a56db;
+  --accent-light: #eef3ff;
+  --border: #e4e3de;
+  --radius: 10px;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--white); line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.nav-logo { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); text-decoration: none; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--ink-soft); font-size: 0.9rem; font-weight: 500; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { background: var(--ink); color: var(--white) !important; padding: 8px 20px; border-radius: 99px; font-size: 0.875rem !important; transition: opacity 0.15s !important; }
+.nav-cta:hover { opacity: 0.8; color: var(--white) !important; }
+
+/* HERO */
+.hero {
+  background: var(--cream);
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(26,86,219,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-light); color: var(--accent);
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em;
+  padding: 5px 14px; border-radius: 99px; margin-bottom: 1.5rem;
+  border: 1px solid rgba(26,86,219,0.15);
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  max-width: 700px; margin: 0 auto 1.25rem;
+  color: var(--ink);
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero p {
+  font-size: 1.1rem; color: var(--ink-soft);
+  max-width: 520px; margin: 0 auto 2.5rem;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent); color: var(--white);
+  padding: 13px 28px; border-radius: 99px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none; transition: transform 0.15s, opacity 0.15s;
+  display: inline-block;
+}
+.btn-primary:hover { transform: translateY(-1px); opacity: 0.9; }
+.btn-secondary {
+  background: var(--white); color: var(--ink);
+  padding: 13px 28px; border-radius: 99px;
+  font-size: 0.95rem; font-weight: 500;
+  text-decoration: none; border: 1px solid var(--border);
+  transition: border-color 0.15s;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--ink-muted); }
+
+/* SOCIAL PROOF */
+.proof-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  text-align: center;
+}
+.proof-bar p { font-size: 0.85rem; color: var(--ink-muted); }
+.proof-bar strong { color: var(--ink); }
+
+/* PREVIEW MOCK */
+.preview-wrap {
+  max-width: 820px; margin: 4rem auto;
+  padding: 0 2rem;
+}
+.preview-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+}
+.preview-bar {
+  background: var(--cream); border-bottom: 1px solid var(--border);
+  padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #ffbd2e; }
+.dot-g { background: #28c840; }
+.preview-inner { display: grid; grid-template-columns: 1fr 1fr; min-height: 280px; }
+.preview-form { padding: 1.5rem; border-right: 1px solid var(--border); }
+.preview-form-label { font-size: 11px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.mock-input {
+  width: 100%; background: var(--cream); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; font-size: 13px; color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.mock-btn {
+  width: 100%; background: var(--accent); color: var(--white);
+  border: none; border-radius: 6px; padding: 9px; font-size: 13px; font-weight: 600;
+  cursor: default; margin-top: 4px;
+}
+.preview-result { padding: 1.5rem; }
+.res-name { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 2px; }
+.res-meta { font-size: 11px; color: var(--ink-muted); margin-bottom: 1rem; }
+.res-section { margin-bottom: 10px; }
+.res-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-bottom: 6px; }
+.res-line { height: 9px; background: var(--cream); border-radius: 4px; margin-bottom: 5px; }
+
+/* HOW IT WORKS */
+.section { padding: 5rem 2rem; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+.section-label { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.section-title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.2; margin-bottom: 1rem; }
+.section-sub { font-size: 1rem; color: var(--ink-soft); max-width: 500px; margin-bottom: 3rem; font-weight: 300; }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+.step { }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent-light); color: var(--accent);
+  font-size: 0.85rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+.step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+.step p { font-size: 0.9rem; color: var(--ink-soft); font-weight: 300; }
+
+/* FEATURES */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.feature-card {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.5rem; transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: var(--accent); }
+.feature-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--accent-light); display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem; margin-bottom: 1rem;
+}
+.feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.feature-card p { font-size: 0.875rem; color: var(--ink-soft); font-weight: 300; }
+
+/* PRICING */
+#pricing { background: var(--cream); }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 820px; }
+.pricing-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 2rem;
+}
+.pricing-card.featured {
+  border-color: var(--accent); border-width: 2px;
+  position: relative;
+}
+.featured-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--white);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+  padding: 4px 12px; border-radius: 99px; white-space: nowrap;
+}
+.plan-name { font-size: 0.8rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.plan-price { font-family: var(--serif); font-size: 2.4rem; line-height: 1; margin-bottom: 0.25rem; }
+.plan-price span { font-family: var(--sans); font-size: 0.9rem; color: var(--ink-muted); }
+.plan-desc { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.plan-features { list-style: none; margin-bottom: 1.75rem; }
+.plan-features li { font-size: 0.875rem; padding: 5px 0; color: var(--ink-soft); display: flex; gap: 8px; }
+.plan-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+.plan-btn {
+  display: block; text-align: center; padding: 11px;
+  border-radius: 99px; font-size: 0.9rem; font-weight: 600;
+  text-decoration: none; transition: opacity 0.15s;
+}
+.plan-btn-outline { border: 1px solid var(--border); color: var(--ink); }
+.plan-btn-outline:hover { border-color: var(--ink-muted); }
+.plan-btn-fill { background: var(--accent); color: var(--white); }
+.plan-btn-fill:hover { opacity: 0.85; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.about-text p { font-size: 1rem; color: var(--ink-soft); font-weight: 300; margin-bottom: 1rem; line-height: 1.8; }
+.about-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.about-stat { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+.about-stat .num { font-family: var(--serif); font-size: 2rem; color: var(--ink); }
+.about-stat .lbl { font-size: 0.8rem; color: var(--ink-muted); margin-top: 2px; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--ink); color: var(--white);
+  padding: 5rem 2rem; text-align: center;
+}
+.cta-banner h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 1rem; }
+.cta-banner p { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 2rem; font-weight: 300; }
+.btn-white {
+  background: var(--white); color: var(--ink);
+  padding: 13px 32px; border-radius: 99px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none; display: inline-block;
+  transition: opacity 0.15s;
+}
+.btn-white:hover { opacity: 0.9; }
+
+/* FOOTER */
+footer {
+  background: var(--cream); border-top: 1px solid var(--border);
+  padding: 2rem; text-align: center;
+}
+footer p { font-size: 0.8rem; color: var(--ink-muted); }
+footer a { color: var(--ink-soft); text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+/* FADE IN */
+.fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade-in.visible { opacity: 1; transform: none; }
+
+@media (max-width: 640px) {
+  .preview-inner { grid-template-columns: 1fr; }
+  .preview-result { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  nav .nav-links li:not(:last-child) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Resume<span>AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#pricing" class="nav-cta">Get started free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">✦ AI-powered resume builder</div>
+  <h1>Your resume, <em>written<br>by AI</em> in seconds</h1>
+  <p>Stop staring at a blank page. Fill in your experience, and our AI crafts a polished, ATS-ready resume that gets you interviews.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary">Build my resume — it's free</a>
+    <a href="#how-it-works" class="btn-secondary">See how it works</a>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof-bar">
+  <p>Trusted by <strong>job seekers</strong> applying to <strong>Google, Amazon, Stripe, and 500+ companies</strong> — resumes generated in under 2 minutes</p>
+</div>
+
+<!-- PREVIEW MOCK -->
+<div class="preview-wrap fade-in">
+  <div class="preview-card">
+    <div class="preview-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <div class="preview-inner">
+      <div class="preview-form">
+        <div class="preview-form-label">Your info</div>
+        <div class="mock-input">Jane Smith — Product Manager</div>
+        <div class="mock-input">5 yrs exp · Fintech · NYC</div>
+        <div class="mock-input" style="height:60px; padding-top:6px;">Led checkout redesign, +22% conversion...</div>
+        <div class="mock-btn">✦ Generate with AI</div>
+      </div>
+      <div class="preview-result">
+        <div class="res-name">Jane Smith</div>
+        <div class="res-meta">jane@email.com · New York, NY · linkedin.com/in/jane</div>
+        <div class="res-section">
+          <div class="res-label">Summary</div>
+          <div class="res-line" style="width:100%"></div>
+          <div class="res-line" style="width:88%"></div>
+          <div class="res-line" style="width:72%"></div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">Experience</div>
+          <div class="res-line" style="width:60%"></div>
+          <div class="res-line" style="width:95%"></div>
+          <div class="res-line" style="width:80%"></div>
+          <div class="res-line" style="width:90%"></div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">Skills</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="background:#f0f0f0;border-radius:99px;padding:2px 8px;font-size:10px;color:#666">Product strategy</span>
+            <span style="background:#f0f0f0;border-radius:99px;padding:2px 8px;font-size:10px;color:#666">SQL</span>
+            <span style="background:#f0f0f0;border-radius:99px;padding:2px 8px;font-size:10px;color:#666">Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Three steps to a job-winning resume</h2>
+    <p class="section-sub">No templates to fiddle with. No writing from scratch. Just your story, told well.</p>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">1</div>
+        <h3>Fill in your details</h3>
+        <p>Add your experience, skills, and target role. Rough notes are fine — the AI handles the polishing.</p>
+      </div>
+      <div class="step fade-in" style="transition-delay:0.1s">
+        <div class="step-num">2</div>
+        <h3>AI writes your resume</h3>
+        <p>Our AI generates strong action-verb bullets, a compelling summary, and clean formatting in seconds.</p>
+      </div>
+      <div class="step fade-in" style="transition-delay:0.2s">
+        <div class="step-num">3</div>
+        <h3>Download and apply</h3>
+        <p>Export as a polished PDF ready to send to employers. Apply with confidence.</p>
+      </div>
+    </div>
+
+    <div class="features-grid" style="margin-top:4rem">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🎯</div>
+        <h3>ATS optimized</h3>
+        <p>Written to pass applicant tracking systems at major companies.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.1s">
+        <div class="feature-icon">⚡</div>
+        <h3>Under 2 minutes</h3>
+        <p>From blank form to finished resume, faster than any template tool.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.2s">
+        <div class="feature-icon">✍️</div>
+        <h3>AI-powered bullets</h3>
+        <p>Transforms rough notes into professional, metric-driven achievements.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.3s">
+        <div class="feature-icon">📄</div>
+        <h3>PDF download</h3>
+        <p>Clean, recruiter-ready PDF export with one click.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.4s">
+        <div class="feature-icon">🔁</div>
+        <h3>Unlimited revisions</h3>
+        <p>Regenerate as many times as you need until it's perfect.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.5s">
+        <div class="feature-icon">🔒</div>
+        <h3>Private by default</h3>
+        <p>Your data is never stored or shared. What you type, stays yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Start free, upgrade when ready</h2>
+    <p class="section-sub">No credit card needed to try. Pay only when you want to download.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-desc">Try it out, see what AI can do with your experience.</div>
+        <ul class="plan-features">
+          <li>AI resume generation</li>
+          <li>Unlimited regenerations</li>
+          <li>Preview in browser</li>
+          <li>1 resume at a time</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline">Get started</a>
+      </div>
+      <div class="pricing-card featured fade-in" style="transition-delay:0.1s">
+        <div class="featured-badge">MOST POPULAR</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$9 <span>/ resume</span></div>
+        <div class="plan-desc">For job seekers who are serious about landing the role.</div>
+        <ul class="plan-features">
+          <li>Everything in Free</li>
+          <li>PDF download</li>
+          <li>Cover letter generation</li>
+          <li>LinkedIn summary included</li>
+          <li>Priority AI quality</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-fill">Download my resume</a>
+      </div>
+      <div class="pricing-card fade-in" style="transition-delay:0.2s">
+        <div class="plan-name">Unlimited</div>
+        <div class="plan-price">$19 <span>/ mo</span></div>
+        <div class="plan-desc">For active job seekers applying to multiple roles.</div>
+        <ul class="plan-features">
+          <li>Everything in Pro</li>
+          <li>Unlimited PDF downloads</li>
+          <li>Multiple resume versions</li>
+          <li>Tailored per job description</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline">Get unlimited</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2 class="section-title">Built for real job seekers</h2>
+        <p>ResumeAI was built out of frustration with resume templates that look the same, writing guides that give generic advice, and tools that charge $30/month for features you use once.</p>
+        <p>We built something simpler: tell us what you've done, and we'll make it sound as good as it is. Powered by the latest AI, built to help you get hired faster.</p>
+        <a href="#pricing" class="btn-primary" style="margin-top:0.5rem">Try it free</a>
+      </div>
+      <div class="about-stat-grid fade-in">
+        <div class="about-stat">
+          <div class="num">2min</div>
+          <div class="lbl">Average time to finished resume</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">$0</div>
+          <div class="lbl">To get started</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">AI</div>
+          <div class="lbl">Powered by Claude, built for humans</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">ATS</div>
+          <div class="lbl">Optimized for major job platforms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Your next job starts with a better resume</h2>
+  <p>Takes 2 minutes. Free to try. No credit card required.</p>
+  <a href="#" class="btn-white">Build my resume now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 ResumeAI · <a href="#">Privacy</a> · <a href="#">Terms</a> · Built with ❤️ and AI</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
